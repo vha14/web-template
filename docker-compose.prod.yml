@@ -1,0 +1,17 @@
+version: '2.1'
+
+services:
+
+  users-service:
+    environment:
+      - APP_SETTINGS=server.config.ProductionConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_prod
+    command: gunicorn -b 0.0.0.0:5000 manage:app
+
+  web-service:
+    build:
+      args:
+        - NODE_ENV=production
+  nginx:
+    ports:
+      - 80:80

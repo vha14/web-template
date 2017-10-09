@@ -1,0 +1,9 @@
+*__pycache__
+/*__pycache__
+.mypy_cache
+.cache/**
+venv
+.idea
+.vscode
+htmlcov
+.tox

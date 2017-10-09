@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+
+  users-service:
+    volumes:
+      - '.:/usr/src/app'
+    environment:
+      - APP_SETTINGS=server.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
+  nginx:
+    ports:
+      - 8080:80
