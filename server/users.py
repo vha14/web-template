@@ -63,7 +63,7 @@ def get_single_user(user_id) -> APIResponse:
             'status': 'success',
             'data': User.query.filter_by(id=int(user_id)).first().to_json()
         }), http_response.OK
-    except ValueError:
+    except (ValueError, AttributeError):
         return jsonify({
             'status': 'fail',
             'message': 'User does not exist'
