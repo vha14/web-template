@@ -1,5 +1,7 @@
 ## What is it?
 
+[![Join the chat at https://gitter.im/web-template-flask-react/Lobby](https://badges.gitter.im/web-template-flask-react/Lobby.svg)](https://gitter.im/web-template-flask-react/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A docker-friendly web project template with the following pieces:
 
 - ReactJS client-side Typescript (`client-ts` folder) based on Create React App template.
