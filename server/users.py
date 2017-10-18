@@ -13,6 +13,10 @@ users_blueprint = Blueprint('users', __name__)
 @users_blueprint.route('/users', methods=['POST'])
 @authenticate
 def add_user(resp) -> APIResponse:
+    bad_request_response = jsonify({
+        'status': 'fail',
+        'message': 'Invalid payload.'
+    }), http_response.BAD_REQUEST
     if not is_admin(resp):
         return jsonify({
             'status': 'error',
@@ -20,10 +24,7 @@ def add_user(resp) -> APIResponse:
         }), http_response.UNAUTHORIZED
     post_data = request.get_json()
     if not post_data:
-        return jsonify({
-            'status': 'fail',
-            'message': 'Invalid payload.'
-        }), http_response.BAD_REQUEST
+        return bad_request_response
     email = post_data.get('email')
     try:
         user = User.query.filter_by(email=email).first()
@@ -42,18 +43,9 @@ def add_user(resp) -> APIResponse:
                 'status': 'fail',
                 'message': 'Sorry. That email already exists.'
             }), http_response.BAD_REQUEST
-    except exc.IntegrityError as e:
-        db.session.rollback()
-        return jsonify({
-            'status': 'fail',
-            'message': 'Invalid payload.'
-        }), http_response.BAD_REQUEST
     except (exc.IntegrityError, ValueError) as e:
         db.session.rollback()
-        return jsonify({
-            'status': 'fail',
-            'message': 'Invalid payload.'
-        }), http_response.BAD_REQUEST
+        return bad_request_response
 
 
 @users_blueprint.route('/users/<user_id>', methods=['GET'])
